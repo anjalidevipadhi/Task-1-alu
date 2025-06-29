@@ -1,0 +1,45 @@
+
+module alu_tb;
+    reg [3:0] a, b;
+    reg [2:0] op;
+    wire [3:0] result;
+    wire carry, zero;
+
+    alu uut (
+        .a(a),
+        .b(b),
+        .op(op),
+        .result(result),
+        .carry(carry),
+        .zero(zero)
+    );
+
+    initial begin
+        $display("OP |   A   |   B   | RESULT | CARRY | ZERO");
+        // Test addition
+        a = 4'b0011; b = 4'b0101; op = 3'b000; #10;
+        $display("ADD| %b | %b | %b   | %b     | %b", a, b, result, carry, zero);
+
+        // Test subtraction
+        a = 4'b1000; b = 4'b0010; op = 3'b001; #10;
+        $display("SUB| %b | %b | %b   | %b     | %b", a, b, result, carry, zero);
+
+        // Test AND
+        a = 4'b1100; b = 4'b1010; op = 3'b010; #10;
+        $display("AND| %b | %b | %b   | %b     | %b", a, b, result, carry, zero);
+
+        // Test OR
+        a = 4'b1100; b = 4'b1010; op = 3'b011; #10;
+        $display(" OR| %b | %b | %b   | %b     | %b", a, b, result, carry, zero);
+
+        // Test AND NOT
+        a = 4'b1100; b = 4'b1010; op = 3'b100; #10;
+        $display("A~B| %b | %b | %b   | %b     | %b", a, b, result, carry, zero);
+
+        // Test zero flag
+        a = 4'b0000; b = 4'b0000; op = 3'b010; #10;
+        $display("AND| %b | %b | %b   | %b     | %b", a, b, result, carry, zero);
+
+        $stop;
+    end
+endmodule
